@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minilibft.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/07 08:14:57 by ccolin            #+#    #+#             */
-/*   Updated: 2024/09/07 11:19:25 by ccolin           ###   ########.fr       */
+/*   Created: 2024/09/07 08:33:16 by ccolin            #+#    #+#             */
+/*   Updated: 2024/09/07 09:34:38 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
-
-void	*philosopher()
-
-int	main(int argc, char **argv)
+char	*ft_strchr(const char *s, int c)
 {
-	t_parameters	parameters;
-	pthread_t		*philosophers;
+	int	i;
 
-	if (!intitialize_parameters(argc, argv, &parameters))
-		return (0);
-	if (!start_philosophers(philosophers, &parameters))
-		return (0);
+	i = 0;
+	while (s[i] && s[i] != (char)c)
+		i++;
+	if (s[i] == (char)c)
+		return ((char *)&s[i]);
+	return ((void *)0);
 }

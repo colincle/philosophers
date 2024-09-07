@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   philosophers_initialization.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/07 08:14:57 by ccolin            #+#    #+#             */
-/*   Updated: 2024/09/07 11:19:25 by ccolin           ###   ########.fr       */
+/*   Created: 2024/09/07 11:17:50 by ccolin            #+#    #+#             */
+/*   Updated: 2024/09/07 11:55:18 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	*philosopher()
-
-int	main(int argc, char **argv)
+int	start_philosophers(pthread_t *philosophers, t_parameters *parameters)
 {
-	t_parameters	parameters;
-	pthread_t		*philosophers;
+	unsigned int	i;
 
-	if (!intitialize_parameters(argc, argv, &parameters))
+	i = 0;
+	philosophers = malloc(sizeof(pthread_t) * parameters->number_of_philosophers);
+	if (!philosophers)
 		return (0);
-	if (!start_philosophers(philosophers, &parameters))
-		return (0);
+	while (i < parameters-> number_of_philosophers)
+	{
+		if (pthread_create(&philosophers[i]))
+	}
 }
