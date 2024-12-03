@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 08:27:13 by ccolin            #+#    #+#             */
-/*   Updated: 2024/09/07 11:14:45 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/03 13:38:32 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ static int	str_is_not_digits_only(char *str)
 
 static int	check_parameters(t_parameters *parameters, int argc)
 {
-	if (parameters->number_of_philosophers == 1)
+	if (parameters->number_of_philosophers < 1)
 		{
-			printf("Error\nInvalid argument(s). There must be at least two philosophers.\n");
+			printf("Error\nInvalid argument(s). There must be at least one philosophers.\n");
 			return (0);
 		}
 	if (parameters->number_of_philosophers == 0 || parameters->time_to_die \

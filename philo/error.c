@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minilibft.c                                        :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/07 08:33:16 by ccolin            #+#    #+#             */
-/*   Updated: 2024/09/07 09:34:38 by ccolin           ###   ########.fr       */
+/*   Created: 2024/09/07 10:03:02 by ccolin            #+#    #+#             */
+/*   Updated: 2024/12/03 11:57:11 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strchr(const char *s, int c)
-{
-	int	i;
+#include "philo.h"
 
-	i = 0;
-	while (s[i] && s[i] != (char)c)
-		i++;
-	if (s[i] == (char)c)
-		return ((char *)&s[i]);
-	return ((void *)0);
+void	err(char *str)
+{
+	printf("%s\n", str);
+	//need to exit after freeing everything
 }

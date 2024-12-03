@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 08:15:04 by ccolin            #+#    #+#             */
-/*   Updated: 2024/09/07 11:07:22 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/03 15:09:43 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <stdio.h>
 # include <pthread.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 typedef struct s_parameters
 {
@@ -24,6 +26,13 @@ typedef struct s_parameters
 	unsigned long long	time_to_sleep;
 	unsigned long long	number_of_times_each_philosopher_must_eat;
 }					t_parameters;
+
+typedef struct s_philo_arg
+{
+	unsigned int				id;
+	pthread_mutex_t	*fork;
+	t_parameters	*parameters;
+}					t_philo_arg;
 
 // initialization.c
 
@@ -36,5 +45,17 @@ char	*ft_strchr(const char *s, int c);
 // debug.c
 
 void	debug_print_parameters(t_parameters *parameters);
+
+//routine.c
+
+void	*routine(void *arg);
+
+//error.c
+
+void	err(char *str);
+
+//philosophers_initialization.c
+
+int	start_philosophers(pthread_t **philosophers, t_parameters *parameters, pthread_mutex_t **fork);
 
 #endif
