@@ -6,12 +6,29 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:17:50 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/07 12:27:03 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/07 16:25:00 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+void	gr_routine(void *arg)
+{
+	t_gr_arg *arguments;
+	int		i;
+	
+	arguments = (t_gr_arg *)arg;
+	while(1)
+	{
+		i = 0;
+		while (arguments->philosophers[i])
+		{
+			if (arguments->parameters->time_of_death[i] <= get_time_ms)
+				//kill philosopher
+			i++;
+		}
+	}
+}
 void	sleeping(t_philo_arg *arguments)
 {
 		printf("philosopher %d is sleeping\n", arguments->id);

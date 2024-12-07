@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 08:27:13 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/07 12:24:23 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/07 16:24:57 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ int	intitialize_parameters(int argc, char **argv, t_parameters	*parameters)
 		parameters->number_of_times_each_philosopher_must_eat = 0;
 	if (!check_parameters(parameters, argc))
 		return (0);
+	parameters->is_alive = malloc(size_of(int) * (parameters->number_of_philosophers));
+		if (!parameters-<)
 	parameters->time_of_death = malloc(sizeof(int) * (parameters->number_of_philosophers));
 	if (!parameters->time_of_death)
 		return (0);

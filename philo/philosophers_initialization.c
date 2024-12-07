@@ -6,11 +6,24 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:17:50 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/07 12:08:35 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/07 15:48:45 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void *gr_args(t_parameters *parameters, pthread_t *philosophers)
+{
+	t_gr_arg *gr_arg;
+
+	gr_arg = malloc(sizeof(gr_arg));
+	if (!gr_arg)
+		return (NULL);
+	
+	gr_arg->parameters = parameters;
+	gr_arg->philosophers = philosophers;
+	return ((void *)gr_arg);
+}
 
 void *new_philo_arg(t_parameters *parameters, int i, pthread_mutex_t **fork)
 {
