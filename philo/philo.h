@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 08:15:04 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/03 15:09:43 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/07 11:58:08 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,18 @@
 # include <pthread.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <sys/time.h>
 
 typedef struct s_parameters
 {
+	unsigned long long	start;
 	unsigned int		number_of_philosophers;
 	unsigned long long	time_to_die;
 	unsigned long long	time_to_eat;
 	unsigned long long	time_to_sleep;
 	unsigned long long	number_of_times_each_philosopher_must_eat;
+	unsigned long long	*time_of_death;
+	pthread_mutex_t		set_time_to_die;
 }					t_parameters;
 
 typedef struct s_philo_arg
@@ -57,5 +61,7 @@ void	err(char *str);
 //philosophers_initialization.c
 
 int	start_philosophers(pthread_t **philosophers, t_parameters *parameters, pthread_mutex_t **fork);
+
+unsigned long long	get_time_ms(void);
 
 #endif

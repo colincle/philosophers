@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:17:50 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/03 15:35:56 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/07 12:27:03 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,18 @@ void	eating(t_philo_arg *arguments)
 		right = 0;
 	else
 		right = arguments->id;
+	printf("philosopher %d will die at %lld\n", arguments->id, arguments->parameters->time_of_death[arguments->id - 1]);
 	pthread_mutex_lock(&arguments->fork[left]);
 	pthread_mutex_lock(&arguments->fork[right]);
-	printf("philosopher %d is eating\n", arguments->id);fflush(stdout);
+	printf("philosopher %d is eating\n", arguments->id);
 	usleep(arguments->parameters->time_to_eat);
+	pthread_mutex_lock(&arguments->parameters->set_time_to_die);
+	arguments->parameters->time_of_death[arguments->id - 1] = get_time_ms() + arguments->parameters->time_to_die;
+	printf("philosopher %d will die at %lld\n", arguments->id, arguments->parameters->time_of_death[arguments->id - 1]);
+	pthread_mutex_unlock(&arguments->parameters->set_time_to_die);
+	printf("philosopher %d is done eating\n", arguments->id);
 	pthread_mutex_unlock(&arguments->fork[right]);
     pthread_mutex_unlock(&arguments->fork[left]);
-	printf("philosopher %d is done eating\n", arguments->id);fflush(stdout);
 }
 
 void	*routine(void *arg)
@@ -47,6 +52,7 @@ void	*routine(void *arg)
 	{
 		eating(arguments);
 		sleeping(arguments);
+		printf("philosopher %d is thinking\n", arguments->id);
 	}
 	return NULL;
 }

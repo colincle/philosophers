@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 08:27:13 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/03 13:38:32 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/07 12:24:23 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,15 @@ static unsigned long long	get_parameter(char *str)
 
 int	intitialize_parameters(int argc, char **argv, t_parameters	*parameters)
 {
+	int		i;
+	i = 0;
 	if (argc != 5 && argc != 6)
 	{
 		printf("Error\nUsage: ./philo number_of_philosophers time_to_die time_"
 		"to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n");
 		return (0);
 	}
+	parameters->start = get_time_ms();
 	parameters->number_of_philosophers = (unsigned int)get_parameter(argv[1]);
 	parameters->time_to_die = get_parameter(argv[2]);
 	parameters->time_to_eat = get_parameter(argv[3]);
@@ -83,5 +86,11 @@ int	intitialize_parameters(int argc, char **argv, t_parameters	*parameters)
 		parameters->number_of_times_each_philosopher_must_eat = 0;
 	if (!check_parameters(parameters, argc))
 		return (0);
+	parameters->time_of_death = malloc(sizeof(int) * (parameters->number_of_philosophers));
+	if (!parameters->time_of_death)
+		return (0);
+	printf("%lld  %lld%c------------------------%c",parameters->start, parameters->time_to_die, 10, 10); //debug
+	while ((unsigned int)i < parameters->number_of_philosophers)
+		parameters->time_of_death[i++] = parameters->start + parameters->time_to_die;
 	return (1);
 }

@@ -6,11 +6,19 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 08:14:57 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/03 14:22:05 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/07 12:13:06 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+unsigned long long	get_time_ms(void)
+{
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return ((tv.tv_sec * 1000) + tv.tv_usec);
+}
 
 void	end_philosophers(pthread_t **philosophers, unsigned int n)
 {
@@ -57,6 +65,8 @@ int	main(int argc, char **argv)
 	if (!intitialize_parameters(argc, argv, &parameters))
 		return (0);
 	forks = set_the_table(&parameters);
+	if (pthread_mutex_init(&parameters.set_time_to_die, NULL) != 0)
+		return (0);
 	if (start_philosophers(&philosophers, &parameters, &forks))
 		return (0);
 	end_philosophers(&philosophers, parameters.number_of_philosophers);
