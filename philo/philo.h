@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 08:15:04 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/07 16:33:24 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/09 13:41:42 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ typedef struct s_parameters
 	unsigned long long	number_of_times_each_philosopher_must_eat;
 	unsigned long long	*time_of_death;
 	int					*is_alive;
-	pthread_mutex_t		set_time_to_die;
-	pthread_mutex_t		is_alive_lock;
+	int					*status;
 }					t_parameters;
 
 typedef struct s_philo_arg
@@ -46,6 +45,9 @@ typedef struct s_gr_arg
 	t_parameters	*parameters;
 }					t_gr_arg;
 
+#define EATING 100
+#define ALIVE 101
+#define DEAD 0
 
 // initialization.c
 

@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 08:27:13 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/07 16:53:42 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/09 14:04:40 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static unsigned long long	get_parameter(char *str)
 
 int	intitialize_parameters(int argc, char **argv, t_parameters	*parameters)
 {
-	int		i;
+	unsigned int		i;
 	i = 0;
 	if (argc != 5 && argc != 6)
 	{
@@ -86,10 +86,19 @@ int	intitialize_parameters(int argc, char **argv, t_parameters	*parameters)
 		parameters->number_of_times_each_philosopher_must_eat = 0;
 	if (!check_parameters(parameters, argc))
 		return (0);
+	parameters->status = malloc(sizeof(int) * (parameters->number_of_philosophers));
+	if (!parameters->status)
+		return (0);
+	while (i < parameters->number_of_philosophers)
+		parameters->status[i++] = ALIVE;
+	i = 0;
 	parameters->is_alive = malloc(sizeof(int) * (parameters->number_of_philosophers));
 	if (!parameters->is_alive)
 		return (0);
-	parameters->time_of_death = malloc(sizeof(int) * (parameters->number_of_philosophers));
+	while (i < parameters->number_of_philosophers)
+		parameters->is_alive[i++] = ALIVE;
+	i = 0;
+	parameters->time_of_death = malloc(sizeof(unsigned long long) * (parameters->number_of_philosophers));
 	if (!parameters->time_of_death)
 		return (0);
 	while ((unsigned int)i < parameters->number_of_philosophers)

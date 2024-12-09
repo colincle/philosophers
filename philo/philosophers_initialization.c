@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:17:50 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/07 15:48:45 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/09 14:16:43 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void *gr_args(t_parameters *parameters, pthread_t *philosophers)
 {
 	t_gr_arg *gr_arg;
 
-	gr_arg = malloc(sizeof(gr_arg));
+	gr_arg = malloc(sizeof(t_gr_arg));
 	if (!gr_arg)
 		return (NULL);
 	
@@ -53,5 +53,6 @@ int	start_philosophers(pthread_t **philosophers, t_parameters *parameters, pthre
 			err("Thread creation failed");
 		i++;
 	}
+
 	return (0);
 }

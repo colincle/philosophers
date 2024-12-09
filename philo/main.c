@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 08:14:57 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/07 16:54:33 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/09 12:59:44 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,6 @@ int	main(int argc, char **argv)
 	if (!intitialize_parameters(argc, argv, &parameters))
 		return (0);
 	forks = set_the_table(&parameters);
-	if (pthread_mutex_init(&parameters.set_time_to_die, NULL) != 0)
-		return (0);
-	if (pthread_mutex_init(&parameters.is_alive_lock, NULL) != 0)
-		return (0);
 	grim_reaper = malloc(sizeof(pthread_t));
 	if (!grim_reaper)
 		return (0);
