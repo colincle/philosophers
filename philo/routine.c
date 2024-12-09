@@ -6,13 +6,13 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:17:50 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/07 16:25:00 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/07 16:56:41 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	gr_routine(void *arg)
+void	*gr_routine(void *arg)
 {
 	t_gr_arg *arguments;
 	int		i;
@@ -21,10 +21,10 @@ void	gr_routine(void *arg)
 	while(1)
 	{
 		i = 0;
-		while (arguments->philosophers[i])
+		while (i <= arguments->parameters->number_of_philosophers)
 		{
-			if (arguments->parameters->time_of_death[i] <= get_time_ms)
-				//kill philosopher
+			if (arguments->parameters->time_of_death[i] <= get_time_ms())
+				printf("philosopher killed\n"); //need to kill 
 			i++;
 		}
 	}
