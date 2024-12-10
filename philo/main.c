@@ -6,23 +6,24 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 08:14:57 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/10 12:56:34 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/10 14:08:06 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-unsigned long long get_time_ms(unsigned long long start)
+unsigned long long get_time_us(unsigned long long start)
 {
 	struct timeval tv;
 
 	gettimeofday(&tv, NULL);
-	unsigned long long current_ms = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
+	unsigned long long current_us = (tv.tv_sec * 1000000) + tv.tv_usec;
 
 	if (start)
-		return current_ms - start;
-	return current_ms;
+		return current_us - start;
+	return current_us;
 }
+
 
 void	end_philosophers(pthread_t **philosophers, unsigned int n)
 {

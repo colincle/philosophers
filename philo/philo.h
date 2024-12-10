@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 08:15:04 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/10 12:21:10 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/10 14:09:40 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	err(char *str);
 
 int	start_philosophers(pthread_t **philosophers, t_parameters *parameters, pthread_mutex_t **forks_locks);
 
-unsigned long long	get_time_ms(unsigned long long start);
+unsigned long long	get_time_us(unsigned long long start);
 
 void	*gr_routine(void *arg);
 

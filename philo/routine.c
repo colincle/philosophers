@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:17:50 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/10 12:54:42 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/10 14:32:44 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ void	*gr_routine(void *arg)
 		{
 			if (arguments->parameters->is_alive[i] != DEAD && arguments->parameters->status[i] != EATING)
 			{
-				if (arguments->parameters->time_of_death[i] <= get_time_ms(arguments->parameters->start))
+				if (arguments->parameters->time_of_death[i] <= get_time_us(arguments->parameters->start))
 				{
 					arguments->parameters->is_alive[i] = DEAD;
-					printf("\n%lld | \t\t\tPhilosopher %d is dead\n\n", get_time_ms(arguments->parameters->start), i + 1);
+					printf("\n%lld | \t\t\tPhilosopher %d is dead\n\n", get_time_us(arguments->parameters->start), i + 1);
 					kill_count++;
 				}
 			}
@@ -46,7 +46,7 @@ void	sleeping(t_philo_arg *arguments)
 {
 		if (!arguments->parameters->is_alive[arguments->id - 1])
 			return ;
-		printf("%lld | Philosopher %d is sleeping\n", get_time_ms(arguments->parameters->start), arguments->id);
+		printf("%lld | Philosopher %d is sleeping\n", get_time_us(arguments->parameters->start), arguments->id);
 		usleep(arguments->parameters->time_to_sleep);
 }
 
@@ -77,16 +77,17 @@ void	eating(t_philo_arg *arguments)
 			break ;
 		}
 	}
+	arguments->parameters->time_of_death[arguments->id - 1] = get_time_us(arguments->parameters->start) + arguments->parameters->time_to_die;
 	arguments->parameters->status[arguments->id -1] = EATING;
-	printf("%lld | Philosopher %d is eating\n",get_time_ms(arguments->parameters->start), arguments->id);
+	printf("%lld | Philosopher %d is eating\n",get_time_us(arguments->parameters->start) / 1000, arguments->id);
 	usleep(arguments->parameters->time_to_eat);
 	arguments->parameters->status[arguments->id -1] = ALIVE;
-	printf("%lld | Philosopher %d is done eating\n",get_time_ms(arguments->parameters->start), arguments->id);
+	printf("%lld | Philosopher %d is done eating\n",get_time_us(arguments->parameters->start), arguments->id);
 	arguments->parameters->forks[right] = ON_THE_TABLE;
 	pthread_mutex_unlock(&arguments->forks_locks[right]);
 	arguments->parameters->forks[left] = ON_THE_TABLE;
     pthread_mutex_unlock(&arguments->forks_locks[left]);
-	arguments->parameters->time_of_death[arguments->id - 1] = get_time_ms(arguments->parameters->start) + arguments->parameters->time_to_die;
+	printf("philosopger %d will die at %lld%c-----------%c", arguments->id, arguments->parameters->time_of_death[arguments->id - 1] / 1000, 10, 10);fflush(stdout); //debug
 }
 
 void	*routine(void *arg)
@@ -94,14 +95,14 @@ void	*routine(void *arg)
 	t_philo_arg *arguments;
 
 	arguments = (t_philo_arg *)arg;
-	arguments->parameters->time_of_death[arguments->id - 1] = get_time_ms(arguments->parameters->start) + arguments->parameters->time_to_die;
+	arguments->parameters->time_of_death[arguments->id - 1] = get_time_us(arguments->parameters->start) + arguments->parameters->time_to_die;
 	while (1)
 	{
 		eating(arguments);
 		sleeping(arguments);
 		if (!arguments->parameters->is_alive[arguments->id - 1])
 			break ;
-		printf("%lld | Philosopher %d is thinking\n", get_time_ms(arguments->parameters->start), arguments->id);
+		printf("%lld | Philosopher %d is thinking\n", get_time_us(arguments->parameters->start), arguments->id);
 	}
 	return NULL;
 }

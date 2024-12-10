@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 08:27:13 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/10 12:42:09 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/10 14:09:40 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	intitialize_parameters(int argc, char **argv, t_parameters	*parameters)
 		"to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n");
 		return (0);
 	}
-	parameters->start = get_time_ms(0);
+	parameters->start = get_time_us(0);
 	parameters->number_of_philosophers = (unsigned int)get_parameter(argv[1]);
 	parameters->time_to_die = get_parameter(argv[2]) * 1000;
 	parameters->time_to_eat = get_parameter(argv[3]) * 1000;
