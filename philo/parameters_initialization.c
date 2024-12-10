@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 08:27:13 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/09 14:04:40 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/10 12:42:09 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,11 @@ int	intitialize_parameters(int argc, char **argv, t_parameters	*parameters)
 		"to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n");
 		return (0);
 	}
-	parameters->start = get_time_ms();
+	parameters->start = get_time_ms(0);
 	parameters->number_of_philosophers = (unsigned int)get_parameter(argv[1]);
-	parameters->time_to_die = get_parameter(argv[2]);
-	parameters->time_to_eat = get_parameter(argv[3]);
-	parameters->time_to_sleep = get_parameter(argv[4]);
+	parameters->time_to_die = get_parameter(argv[2]) * 1000;
+	parameters->time_to_eat = get_parameter(argv[3]) * 1000;
+	parameters->time_to_sleep = get_parameter(argv[4]) * 1000;
 	if (argc == 6)
 		parameters->number_of_times_each_philosopher_must_eat = (unsigned int)get_parameter(argv[5]);
 	else
@@ -101,7 +101,10 @@ int	intitialize_parameters(int argc, char **argv, t_parameters	*parameters)
 	parameters->time_of_death = malloc(sizeof(unsigned long long) * (parameters->number_of_philosophers));
 	if (!parameters->time_of_death)
 		return (0);
+	parameters->forks = malloc(sizeof(int) * (parameters->number_of_philosophers));
+	if (!parameters->forks)
+		return (0);
 	while ((unsigned int)i < parameters->number_of_philosophers)
-		parameters->time_of_death[i++] = parameters->start + parameters->time_to_die;
+		parameters->forks[i++] = ON_THE_TABLE;
 	return (1);
 }

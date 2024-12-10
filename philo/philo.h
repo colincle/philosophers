@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 08:15:04 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/09 13:41:42 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/10 12:21:10 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,13 @@ typedef struct s_parameters
 	unsigned long long	*time_of_death;
 	int					*is_alive;
 	int					*status;
+	int					*forks;
 }					t_parameters;
 
 typedef struct s_philo_arg
 {
 	unsigned int				id;
-	pthread_mutex_t	*fork;
+	pthread_mutex_t	*forks_locks;
 	t_parameters	*parameters;
 }					t_philo_arg;
 
@@ -48,6 +49,8 @@ typedef struct s_gr_arg
 #define EATING 100
 #define ALIVE 101
 #define DEAD 0
+#define ON_THE_TABLE 102
+#define USED 0
 
 // initialization.c
 
@@ -71,9 +74,9 @@ void	err(char *str);
 
 //philosophers_initialization.c
 
-int	start_philosophers(pthread_t **philosophers, t_parameters *parameters, pthread_mutex_t **fork);
+int	start_philosophers(pthread_t **philosophers, t_parameters *parameters, pthread_mutex_t **forks_locks);
 
-unsigned long long	get_time_ms(void);
+unsigned long long	get_time_ms(unsigned long long start);
 
 void	*gr_routine(void *arg);
 

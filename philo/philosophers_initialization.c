@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:17:50 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/09 14:16:43 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/10 11:34:35 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void *gr_args(t_parameters *parameters, pthread_t *philosophers)
 	return ((void *)gr_arg);
 }
 
-void *new_philo_arg(t_parameters *parameters, int i, pthread_mutex_t **fork)
+void *new_philo_arg(t_parameters *parameters, int i, pthread_mutex_t **forks_locks)
 {
 	t_philo_arg *philo_arg;
 
@@ -35,11 +35,11 @@ void *new_philo_arg(t_parameters *parameters, int i, pthread_mutex_t **fork)
 	
 	philo_arg->id = i + 1;
 	philo_arg->parameters = parameters;
-	philo_arg->fork = *fork;
+	philo_arg->forks_locks = *forks_locks;
 	return ((void *)philo_arg);
 }
 
-int	start_philosophers(pthread_t **philosophers, t_parameters *parameters, pthread_mutex_t **fork)
+int	start_philosophers(pthread_t **philosophers, t_parameters *parameters, pthread_mutex_t **forks_locks)
 {
 	unsigned int	i;
 
@@ -49,7 +49,7 @@ int	start_philosophers(pthread_t **philosophers, t_parameters *parameters, pthre
 		return (0);
 	while (i < parameters-> number_of_philosophers)
 	{
-		if (pthread_create(&(*philosophers)[i], NULL, routine, new_philo_arg(parameters, i, fork)))
+		if (pthread_create(&(*philosophers)[i], NULL, routine, new_philo_arg(parameters, i, forks_locks)))
 			err("Thread creation failed");
 		i++;
 	}
