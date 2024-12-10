@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parameters_initialization.c                        :+:      :+:    :+:   */
+/*   param_initialization.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -26,23 +26,23 @@ static int	str_is_not_digits_only(char *str)
 	return (0);
 }
 
-static int	check_parameters(t_parameters *parameters, int argc)
+static int	check_param(t_param *param, int argc)
 {
-	if (parameters->number_of_philosophers < 1)
-		{
-			printf("Error\nInvalid argument(s). There must be at least one philosophers.\n");
-			return (0);
-		}
-	if (parameters->number_of_philosophers == 0 || parameters->time_to_die \
-	== 0 || parameters->time_to_eat == 0 || parameters->time_to_sleep == 0)
+	if (param->number_of_philosophers < 1)
 	{
-		printf("Error\nInvalid argument(s). Please provide positive numbers for all parameters.\n");
+		printf("Error\nInvalid argument(s). There must be at least one philosophers.\n");
+		return (0);
+	}
+	if (param->number_of_philosophers == 0 || param->time_to_die == 0
+		|| param->time_to_eat == 0 || param->time_to_sleep == 0)
+	{
+		printf("Error\nInvalid argument(s). Please provide positive numbers for all param.\n");
 		return (0);
 	}
 	if (argc == 6)
-		if (parameters->number_of_times_each_philosopher_must_eat == 0)
+		if (param->number_of_times_each_philosopher_must_eat == 0)
 		{
-			printf("Error\nInvalid argument(s). Please provide positive numbers for all parameters.\n");
+			printf("Error\nInvalid argument(s). Please provide positive numbers for all param.\n");
 			return (0);
 		}
 	return (1);
@@ -65,46 +65,48 @@ static unsigned long long	get_parameter(char *str)
 	return (nbr);
 }
 
-int	intitialize_parameters(int argc, char **argv, t_parameters	*parameters)
+int	intitialize_param(int argc, char **argv, t_param *param)
 {
-	unsigned int		i;
+	unsigned int	i;
+
 	i = 0;
 	if (argc != 5 && argc != 6)
 	{
 		printf("Error\nUsage: ./philo number_of_philosophers time_to_die time_"
-		"to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n");
+				"to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n");
 		return (0);
 	}
-	parameters->start = get_time_us(0);
-	parameters->number_of_philosophers = (unsigned int)get_parameter(argv[1]);
-	parameters->time_to_die = get_parameter(argv[2]) * 1000;
-	parameters->time_to_eat = get_parameter(argv[3]) * 1000;
-	parameters->time_to_sleep = get_parameter(argv[4]) * 1000;
+	param->start = time_us(0);
+	param->number_of_philosophers = (unsigned int)get_parameter(argv[1]);
+	param->time_to_die = get_parameter(argv[2]) * 1000;
+	param->time_to_eat = get_parameter(argv[3]) * 1000;
+	param->time_to_sleep = get_parameter(argv[4]) * 1000;
 	if (argc == 6)
-		parameters->number_of_times_each_philosopher_must_eat = (unsigned int)get_parameter(argv[5]);
+		param->number_of_times_each_philosopher_must_eat = (unsigned int)get_parameter(argv[5]);
 	else
-		parameters->number_of_times_each_philosopher_must_eat = 0;
-	if (!check_parameters(parameters, argc))
+		param->number_of_times_each_philosopher_must_eat = 0;
+	if (!check_param(param, argc))
 		return (0);
-	parameters->status = malloc(sizeof(int) * (parameters->number_of_philosophers));
-	if (!parameters->status)
+	param->status = malloc(sizeof(int) * (param->number_of_philosophers));
+	if (!param->status)
 		return (0);
-	while (i < parameters->number_of_philosophers)
-		parameters->status[i++] = ALIVE;
+	while (i < param->number_of_philosophers)
+		param->status[i++] = ALIVE;
 	i = 0;
-	parameters->is_alive = malloc(sizeof(int) * (parameters->number_of_philosophers));
-	if (!parameters->is_alive)
+	param->is_alive = malloc(sizeof(int) * (param->number_of_philosophers));
+	if (!param->is_alive)
 		return (0);
-	while (i < parameters->number_of_philosophers)
-		parameters->is_alive[i++] = ALIVE;
+	while (i < param->number_of_philosophers)
+		param->is_alive[i++] = ALIVE;
 	i = 0;
-	parameters->time_of_death = malloc(sizeof(unsigned long long) * (parameters->number_of_philosophers));
-	if (!parameters->time_of_death)
+	param->time_of_death = malloc(sizeof(unsigned long long)
+			* (param->number_of_philosophers));
+	if (!param->time_of_death)
 		return (0);
-	parameters->forks = malloc(sizeof(int) * (parameters->number_of_philosophers));
-	if (!parameters->forks)
+	param->forks = malloc(sizeof(int) * (param->number_of_philosophers));
+	if (!param->forks)
 		return (0);
-	while ((unsigned int)i < parameters->number_of_philosophers)
-		parameters->forks[i++] = ON_THE_TABLE;
+	while ((unsigned int)i < param->number_of_philosophers)
+		param->forks[i++] = ON_THE_TABLE;
 	return (1);
 }

@@ -6,20 +6,20 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 08:15:04 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/10 14:09:40 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/10 17:12:01 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include <stdio.h>
 # include <pthread.h>
+# include <stdio.h>
 # include <stdlib.h>
-# include <unistd.h>
 # include <sys/time.h>
+# include <unistd.h>
 
-typedef struct s_parameters
+typedef struct s_param
 {
 	unsigned long long	start;
 	unsigned int		number_of_philosophers;
@@ -31,55 +31,57 @@ typedef struct s_parameters
 	int					*is_alive;
 	int					*status;
 	int					*forks;
-}					t_parameters;
+}						t_param;
 
 typedef struct s_philo_arg
 {
-	unsigned int				id;
-	pthread_mutex_t	*forks_locks;
-	t_parameters	*parameters;
-}					t_philo_arg;
+	unsigned int		id;
+	pthread_mutex_t		*forks_locks;
+	t_param				*param;
+}						t_philo_arg;
 
 typedef struct s_gr_arg
 {
-	pthread_t 		*philosophers;
-	t_parameters	*parameters;
-}					t_gr_arg;
+	pthread_t			*philosophers;
+	t_param				*param;
+}						t_gr_arg;
 
-#define EATING 100
-#define ALIVE 101
-#define DEAD 0
-#define ON_THE_TABLE 102
-#define USED 0
+# define EATING 100
+# define ALIVE 101
+# define DEAD 0
+# define ON_THE_TABLE 102
+# define USED 0
 
 // initialization.c
 
-int		intitialize_parameters(int argc, char **argv, t_parameters	*parameters);
+int						intitialize_param(int argc, char **argv,
+							t_param *param);
 
 // minilibft.c
 
-char	*ft_strchr(const char *s, int c);
+char					*ft_strchr(const char *s, int c);
 
 // debug.c
 
-void	debug_print_parameters(t_parameters *parameters);
+void					debug_print_param(t_param *param);
 
-//routine.c
+// routine.c
 
-void	*routine(void *arg);
+void					*routine(void *arg);
 
-//error.c
+// error.c
 
-void	err(char *str);
+void					err(char *str);
 
-//philosophers_initialization.c
+// philosophers_initialization.c
 
-int	start_philosophers(pthread_t **philosophers, t_parameters *parameters, pthread_mutex_t **forks_locks);
+int						start_philosophers(pthread_t **philosophers,
+							t_param *param, pthread_mutex_t **forks_locks);
 
-unsigned long long	get_time_us(unsigned long long start);
+unsigned long long		time_us(unsigned long long start);
 
-void	*gr_routine(void *arg);
+void					*gr_routine(void *arg);
 
-void *gr_args(t_parameters *parameters, pthread_t *philosophers);
+void					*gr_args(t_param *param, pthread_t *philosophers);
 
 #endif
