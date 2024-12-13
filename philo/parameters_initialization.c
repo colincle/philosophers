@@ -92,20 +92,22 @@ int	intitialize_param(int argc, char **argv, t_param *param)
 		return (0);
 	while (i < param->number_of_philosophers)
 		param->status[i++] = ALIVE;
-	i = 0;
-	param->is_alive = malloc(sizeof(int) * (param->number_of_philosophers));
-	if (!param->is_alive)
-		return (0);
-	while (i < param->number_of_philosophers)
-		param->is_alive[i++] = ALIVE;
+	param->is_alive = ALIVE;
 	i = 0;
 	param->time_of_death = malloc(sizeof(unsigned long long)
 			* (param->number_of_philosophers));
 	if (!param->time_of_death)
+	{
+		free (param->status);
 		return (0);
+	}
 	param->forks = malloc(sizeof(int) * (param->number_of_philosophers));
 	if (!param->forks)
+	{
+		free (param->status);
+		free (param->time_of_death);
 		return (0);
+	}
 	while ((unsigned int)i < param->number_of_philosophers)
 		param->forks[i++] = ON_THE_TABLE;
 	return (1);

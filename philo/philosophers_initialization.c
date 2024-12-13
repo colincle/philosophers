@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:17:50 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/10 17:11:40 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/13 15:20:47 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	*new_philo_arg(t_param *param, int i, pthread_mutex_t **forks_locks) {
   return ((void *)philo_arg);
 }
 
-int	start_philosophers(pthread_t **philosophers, t_param *param,
+int start_philosophers(pthread_t **philosophers, t_param *param,
                        pthread_mutex_t **forks_locks) {
   unsigned int i;
 
@@ -45,12 +45,21 @@ int	start_philosophers(pthread_t **philosophers, t_param *param,
   *philosophers = malloc(sizeof(pthread_t) * param->number_of_philosophers);
   if (!*philosophers)
     return (0);
+
   while (i < param->number_of_philosophers) {
     if (pthread_create(&(*philosophers)[i], NULL, routine,
-                       new_philo_arg(param, i, forks_locks)))
+                       new_philo_arg(param, i, forks_locks))) {
       err("Thread creation failed");
+      
+      // Clean up previously created threads
+      for (unsigned int j = 0; j < i; j++) {
+        pthread_join((*philosophers)[j], NULL);
+      }
+      
+      free(*philosophers);
+      return (0);
+    }
     i++;
   }
-
-  return (0);
+  return (1);
 }

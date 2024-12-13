@@ -6,11 +6,18 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:17:50 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/10 17:54:55 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/13 15:35:39 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	is_alive(t_param *param)
+{
+	if (!param->is_alive)
+		return (0);
+	return (1);
+}
 
 void	*gr_routine(void *arg)
 {
@@ -23,37 +30,34 @@ void	*gr_routine(void *arg)
 	while (1)
 	{
 		i = 0;
-		if (terminate)
-		{
-			while (i < args->param->number_of_philosophers)
-				args->param->is_alive[i++] = DEAD;
-			break ;
-		}
 		while (i < args->param->number_of_philosophers)
 		{
-			if (args->param->is_alive[i] != DEAD
+			if (is_alive(args->param)
 				&& args->param->status[i] != EATING)
 			{
 				if (args->param->time_of_death[i] <= time_us(args->param->start))
 				{
-					args->param->is_alive[i] = DEAD;
-					printf("\n%lld | \t\t\tPhilosopher %d is dead\n\n", time_us(args->param->start) / 1000, i + 1);
+					args->param->is_alive = DEAD;
+					printf("%-5lld Philosopher %d died\n", time_us(args->param->start) / 1000, i + 1);
 					terminate = 1;
 					break ;
 				}
 			}
 			i++;
 		}
+		if (!is_alive(args->param))
+			break ;
 		usleep(100);
 	}
-	// all philosophers are dead, exit the simulation
+	free(arg);
 	return (NULL);
 }
+
 void	sleeping(t_philo_arg *args)
 {
-	if (!args->param->is_alive[args->id - 1])
+	if (!is_alive(args->param))
 		return ;
-	printf("%lld | Philosopher %d is sleeping\n", time_us(args->param->start)
+	printf("%-5lld Philosopher %d is sleeping\n", time_us(args->param->start)
 		/ 1000, args->id);
 	usleep(args->param->time_to_sleep);
 }
@@ -74,29 +78,32 @@ void	eating(t_philo_arg *args)
 	}
 	while (1)
 	{
-		if (!args->param->is_alive[args->id - 1])
+		if (!is_alive(args->param))
 			return ;
 		if (args->param->forks[left] && args->param->forks[right])
 		{
 			pthread_mutex_lock(&args->forks_locks[left]);
 			args->param->forks[left] = USED;
+			if (is_alive(args->param))
+				printf("%-5lld Philosopher %d has taken a fork\n", time_us(args->param->start) / 1000, args->id);
 			pthread_mutex_lock(&args->forks_locks[right]);
 			args->param->forks[right] = USED;
+			if (is_alive(args->param))
+				printf("%-5lld Philosopher %d has taken a fork\n", time_us(args->param->start) / 1000, args->id);
 			break ;
 		}
 	}
 	args->param->time_of_death[args->id - 1] = time_us(args->param->start) + args->param->time_to_die;
 	args->param->status[args->id - 1] = EATING;
-	printf("%lld | Philosopher %d is eating\n", time_us(args->param->start)
-		/ 1000, args->id);
+	if (is_alive(args->param))
+		printf("%-5lld Philosopher %d is eating\n", time_us(args->param->start) / 1000, args->id);
 	usleep(args->param->time_to_eat);
 	args->param->status[args->id - 1] = ALIVE;
-	printf("%lld | Philosopher %d is done eating\n", time_us(args->param->start) / 1000, args->id);
+	if (is_alive(args->param))
 	args->param->forks[right] = ON_THE_TABLE;
 	pthread_mutex_unlock(&args->forks_locks[right]);
 	args->param->forks[left] = ON_THE_TABLE;
 	pthread_mutex_unlock(&args->forks_locks[left]);
-	printf("philosopger %d will die at %lld%c-----------%c", args->id, args->param->time_of_death[args->id - 1] / 1000, 10, 10); fflush(stdout); // debug
 }
 
 void	*routine(void *arg)
@@ -109,10 +116,10 @@ void	*routine(void *arg)
 	{
 		eating(args);
 		sleeping(args);
-		if (!args->param->is_alive[args->id - 1])
+		if (!is_alive(args->param))
 			break ;
-		printf("%lld | Philosopher %d is thinking\n",
-			time_us(args->param->start) / 1000, args->id);
+		printf("%-5lld Philosopher %d is thinking\n", time_us(args->param->start) / 1000, args->id);
 	}
+	free(arg);
 	return (NULL);
 }

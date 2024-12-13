@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 08:15:04 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/10 17:12:01 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/13 14:35:31 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct s_param
 	unsigned long long	time_to_sleep;
 	unsigned long long	number_of_times_each_philosopher_must_eat;
 	unsigned long long	*time_of_death;
-	int					*is_alive;
+	int					is_alive;
 	int					*status;
 	int					*forks;
 }						t_param;
