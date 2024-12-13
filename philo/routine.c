@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:17:50 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/13 15:35:39 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/13 16:06:15 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ void	*gr_routine(void *arg)
 	unsigned int	i;
 	int				terminate;
 
-	terminate = 0;
+
 	args = (t_gr_arg *)arg;
+	while (!args->param->ready)
+		wait(100);
 	while (1)
 	{
 		i = 0;
@@ -39,7 +41,6 @@ void	*gr_routine(void *arg)
 				{
 					args->param->is_alive = DEAD;
 					printf("%-5lld Philosopher %d died\n", time_us(args->param->start) / 1000, i + 1);
-					terminate = 1;
 					break ;
 				}
 			}
