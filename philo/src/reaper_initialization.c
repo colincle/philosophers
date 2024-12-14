@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   reaper_initialization.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/07 10:03:02 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/03 11:57:11 by ccolin           ###   ########.fr       */
+/*   Created: 2024/09/07 11:17:50 by ccolin            #+#    #+#             */
+/*   Updated: 2024/12/14 16:20:47 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	err(char *str)
+void	*reaper_args(t_param *param, pthread_t *philo)
 {
-	printf("%s\n", str);
-	//need to exit after freeing everything
+	t_reaper_arg	*reaper_arg;
+
+	reaper_arg = malloc(sizeof(t_reaper_arg));
+	if (!reaper_arg)
+		return (NULL);
+	reaper_arg->param = param;
+	reaper_arg->philo = philo;
+	return ((void *)reaper_arg);
 }
