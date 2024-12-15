@@ -6,13 +6,13 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:17:50 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/14 16:20:47 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/15 11:40:55 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	*reaper_args(t_param *param, pthread_t *philo)
+void	*reaper_args(t_param *param, int id)
 {
 	t_reaper_arg	*reaper_arg;
 
@@ -20,6 +20,6 @@ void	*reaper_args(t_param *param, pthread_t *philo)
 	if (!reaper_arg)
 		return (NULL);
 	reaper_arg->param = param;
-	reaper_arg->philo = philo;
+	reaper_arg->id = id;
 	return ((void *)reaper_arg);
 }

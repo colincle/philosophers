@@ -1,4 +1,4 @@
-NAME        =   philosophers
+NAME        =   philo
 INCLUDES    =   -I include
 
 CFLAGS      =   -Wall -Werror -Wextra $(INCLUDES)

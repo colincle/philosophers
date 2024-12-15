@@ -20,6 +20,7 @@ void	*new_philo_arg(t_param *param, int i, pthread_mutex_t **frk_lock)
 	if (!philo_arg)
 		return (NULL);
 	philo_arg->id = i + 1;
+	philo_arg->meal = 0;
 	philo_arg->param = param;
 	philo_arg->frk_lock = *frk_lock;
 	return ((void *)philo_arg);
