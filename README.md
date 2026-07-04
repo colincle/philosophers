@@ -6,6 +6,8 @@ and thinking. Each needs the two forks next to it to eat, and the simulation has
 to run without deadlocks and without any philosopher starving. Built as the 42
 "philosophers" project.
 
+![philosophers demo](gif/gif.gif)
+
 ## Requirements
 
 A C compiler, `make`, and a POSIX threads implementation. Builds and runs on both
