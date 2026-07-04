@@ -40,11 +40,30 @@ Produces the `philo` binary.
 - `meals` — optional. If given, the simulation stops once every philosopher has
   eaten this many times.
 
-Example:
+Each event is logged as the timestamp in milliseconds followed by the
+philosopher and the action, for example `0 Philosopher 1 has taken a fork`,
+`0 Philosopher 1 is eating`, and `804 Philosopher 1 has died`.
 
-```sh
-./philo 5 800 200 200
-```
+## Examples
 
-Each event is logged with a timestamp, for example
-`0 1 has taken a fork`, `0 1 is eating`, and `X 3 died`.
+Each of these outcomes is dictated by the rules, not by luck, so a correct build
+always behaves as described. If a run does something else, that is a bug.
+
+- `./philo 1 800 200 200`
+  One philosopher, one fork. Eating requires two forks, so it can never eat and
+  starves. Expected: it takes its single fork, then dies at about 800 ms, having
+  never eaten.
+
+- `./philo 4 100 200 100`
+  `time_to_die` (100) is smaller than `time_to_eat` (200), so no philosopher can
+  possibly finish a meal before its clock runs out. Expected: a philosopher dies
+  at about 100 ms.
+
+- `./philo 5 800 200 200`
+  `time_to_die` (800) leaves plenty of slack over one eat-and-sleep cycle (400),
+  so every philosopher can always get to the forks in time. Expected: no one ever
+  dies, and the simulation runs until you stop it.
+
+- `./philo 5 800 200 200 7`
+  Same timing, but capped at seven meals each. Expected: no death, and the
+  simulation ends on its own once all five have eaten seven times.
