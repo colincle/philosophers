@@ -99,7 +99,6 @@ int					intitialize_param(int argc, char **argv, t_param *param);
 
 //=========================>> PHILO_ROUTINE.C <<============================//
 void				sleeping(t_philo_arg *args);
-void				swap_forks(unsigned int *left, unsigned int *right);
 void				take_forks(t_philo_arg *args, unsigned int *left,
 						unsigned int *right);
 void				eating(t_philo_arg *args);
@@ -122,7 +121,6 @@ void				*reaper_routine(void *arg);
 //=============================>> UTILS.C <<================================//
 char				*ft_strchr(const char *s, int c);
 unsigned long long	time_us(unsigned long long strt);
-void				swap_forks(unsigned int *left, unsigned int *right);
 void				set_time_of_death(t_philo_arg *args);
 void				swap_forks(unsigned int *left, unsigned int *right);
 

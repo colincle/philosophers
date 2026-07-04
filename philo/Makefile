@@ -21,7 +21,7 @@ BAR_COLOR   =   \033[42m
 RED         =   \033[0;91m
 RESET_COLOR =   \033[0m
 
-all: $(NAME) norm
+all: $(NAME)
 
 $(NAME): $(OBJS)
 	@printf "\r\033[K"  # Clear the progress bar line

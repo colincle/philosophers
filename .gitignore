@@ -1,0 +1,9 @@
+# Build artifacts
+philo/obj/
+philo/philo
+philo/philosophers
+*.o
+
+# Editor and OS
+.vscode/
+.DS_Store
