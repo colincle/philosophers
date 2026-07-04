@@ -19,7 +19,7 @@ int	is_alive(t_param *param)
 	return (1);
 }
 
-void	kill(t_reaper_arg *args, int id, int silent)
+void	kill_philosopher(t_reaper_arg *args, int id, int silent)
 {
 	args->param->is_alive = DEAD;
 	if (silent)
@@ -38,14 +38,14 @@ void	*reaper_routine(void *arg)
 	{
 		if (args->param->finished == args->param->nb_philo)
 		{
-			kill(args, args->id, 0);
+			kill_philosopher(args, args->id, 0);
 			break ;
 		}
 		pthread_mutex_lock(&args->param->eating_lock[args->id - 1]);
 		if ((args->param->dth_time[args->id - 1] <= time_us(args->param->strt))
 			&& args->param->is_alive)
 		{
-			kill(args, args->id, 1);
+			kill_philosopher(args, args->id, 1);
 			pthread_mutex_unlock(&args->param->eating_lock[args->id - 1]);
 			break ;
 		}

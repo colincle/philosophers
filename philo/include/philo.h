@@ -115,7 +115,7 @@ void				*reaper_args(t_param *param, int id);
 
 //=========================>> REAPER_ROUTINE.C <<===========================//
 int					is_alive(t_param *param);
-void				kill(t_reaper_arg *args, int i, int silent);
+void				kill_philosopher(t_reaper_arg *args, int i, int silent);
 void				*reaper_routine(void *arg);
 
 //=============================>> UTILS.C <<================================//
