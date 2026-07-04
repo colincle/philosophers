@@ -90,7 +90,7 @@ pthread_mutex_t	*make_finish_mutexes(t_param *param, pthread_mutex_t *frk_lock)
 				pthread_mutex_destroy(&finish_lock[i]);
 			}
 			free(finish_lock);
-			cleanup_4(param, finish_lock);
+			cleanup_4(param, frk_lock);
 			return (NULL);
 		}
 		i++;
