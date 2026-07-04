@@ -6,6 +6,11 @@ and thinking. Each needs the two forks next to it to eat, and the simulation has
 to run without deadlocks and without any philosopher starving. Built as the 42
 "philosophers" project.
 
+## Requirements
+
+A C compiler, `make`, and a POSIX threads implementation. Builds and runs on both
+macOS and Linux.
+
 ## How it works
 
 - Each philosopher runs in its own thread.
